@@ -1,13 +1,14 @@
-from typing import Dict, Any
-
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
+from typing import Dict
+import json
 
 from app.api.websocket_manager import manager
 from app.capa_eoo.indicadores import compute_indicators
 from app.capa_eoo.motor_diagnostico import diagnose
 from app.modelos.esquemas_pydantic import InputSignal
 from app.nucleo_mro.inferencia_bayes import estimate_failure_probability
+from app.db import get_engine, signals
 
 router = APIRouter()
 
@@ -44,6 +45,16 @@ def ingest_signal(signal: InputSignal) -> dict:
         "failure_probability": risk,
     }
     manager.broadcast({"event": "diagnostic", "payload": response})
+
+    # persist signal into DB (simple insert)
+    try:
+        engine = get_engine()
+        with engine.connect() as conn:
+            conn.execute(signals.insert().values(source=signal.source, timestamp=signal.timestamp, payload=json.dumps(signal.payload)))
+    except Exception as e:
+        # do not fail ingestion on DB error; report warning
+        print('DB insert failed:', e)
+
     return response
 
 
