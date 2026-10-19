@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: magnta_web
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATABASE_URL=postgresql://magnta:magnta_pass@db:5432/magnta
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: magnta_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: magnta
+      POSTGRES_PASSWORD: magnta_pass
+      POSTGRES_DB: magnta
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

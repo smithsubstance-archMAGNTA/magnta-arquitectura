@@ -1,0 +1,23 @@
+# Files and folders to ignore in Docker context
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+.venv/
+.venv/*
+venv/
+venv/*
+.pytest_cache/
+.git/
+.gitignore
+*.log
+*.sqlite3
+__pycache__/
+build/
+dist/
+*.egg-info/
+
+# Node / frontend
+node_modules/
