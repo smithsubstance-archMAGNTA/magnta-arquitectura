@@ -25,5 +25,17 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  simulator:
+    build: .
+    container_name: magnta_simulator
+    depends_on:
+      - web
+    environment:
+      - SIM_TARGET=http://web:8000/ingest-signal
+      - SIM_INTERVAL=5
+      - SIM_SOURCE=sim-1
+    command: ["python", "/app/scripts/simulator.py"]
+    restart: unless-stopped
+
 volumes:
   pgdata:
