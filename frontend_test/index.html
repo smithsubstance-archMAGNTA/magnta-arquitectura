@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MAGNTA Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        margin: 0;
+        padding: 24px;
+      }
+      .container {
+        max-width: 980px;
+        margin: 0 auto;
+      }
+      .card {
+        background: #111827;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      canvas {
+        width: 100% !important;
+        height: 340px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h2>MAGNTA Dashboard</h2>
+        <p>Estado operativo en tiempo real</p>
+      </div>
+      <div class="card">
+        <canvas id="entropyChart"></canvas>
+      </div>
+    </div>
+
+    <script src="./js/chart_config.js"></script>
+  </body>
+</html>
